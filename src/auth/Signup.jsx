@@ -48,14 +48,7 @@ export default function Signup() {
             </p>
           </div>
           <div className="mt-7 flex flex-col gap-2">
-            {/* <button className="inline-flex h-10 w-full items-center justify-center gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60">
-              <img
-                src="https://www.svgrepo.com/show/512317/github-142.svg"
-                alt="GitHub"
-                className="h-[18px] w-[18px] "
-              />
-              Continue with GitHub
-            </button> */}
+       
             <button
             onClick={SigninWithGoogle}
              className="inline-flex h-10 w-full items-center justify-center gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60">
@@ -66,14 +59,6 @@ export default function Signup() {
               />
               Continue with Google
             </button>
-            {/* <button className="inline-flex h-10 w-full items-center justify-center gap-2 rounded border border-slate-300 bg-white p-2 text-sm font-medium text-black outline-none focus:ring-2 focus:ring-[#333] focus:ring-offset-1 disabled:cursor-not-allowed disabled:opacity-60">
-              <img
-                src="https://www.svgrepo.com/show/448234/linkedin.svg"
-                alt="Google"
-                className="h-[18px] w-[18px] "
-              />
-              Continue with LinkedIn
-            </button> */}
           </div>
           <div className="flex w-full items-center gap-2 py-6 text-sm text-slate-600">
             <div className="h-px w-full bg-slate-200" />
