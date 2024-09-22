@@ -33,8 +33,8 @@ export default function Home() {
     setLoading(true);
     try {
       const response = await axios.post(
-        // "https://lserve.vercel.app/fetch-video",
-        "http://localhost:4000/fetch-video",
+        "https://lserve.vercel.app/fetch-video",
+
         { query, userId }
       );
       const res = response.data.video;
