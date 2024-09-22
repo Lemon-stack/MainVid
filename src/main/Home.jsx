@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import About from "./about";
 import SignOutButton from "./assets/signout";
 export default function Home() {
-  //   const navigate = useNavigate();
   const [anySearch, setAnySearch] = useState(false);
   const [loading, setLoading] = useState(false);
   const [videos, setVideos] = useState([]);
@@ -16,18 +15,6 @@ export default function Home() {
   const [notificationOpened, setNotificationOpened] = useState(false);
   const { currentUser } = useAuth();
   const userId = currentUser.uid;
-  //   const [error, setError] = useState("");
-  //   async function handleLogout(e) {
-  //     e.preventDefault();
-  //     try {
-  //       const result = await logout();
-  //       console.log(result);
-  //       navigate("/login");
-  //     } catch (error) {
-  //       const errorMessage = error.message.match(/auth\/([^)]+)/);
-  //       setError(errorMessage ? errorMessage[1] : "An error occurred");
-  //     }
-  //   }
 
   async function search() {
     setLoading(true);
@@ -35,7 +22,12 @@ export default function Home() {
       const response = await axios.post(
         "https://lserve.vercel.app/fetch-video",
 
-        { query, userId }
+        { query },
+        {
+          headers: {
+            Authorization: `Bearer ${userId}`,
+          },
+        }
       );
       const res = response.data.video;
       const videoItems = res.items.map((item) => ({
@@ -46,13 +38,10 @@ export default function Home() {
       setVideos(videoItems);
       setAnySearch(true);
       setLoading(false);
-
-      // Process the data.items array which contains the search results
     } catch {
       (error) =>
         console.error("Error fetching the YouTube videos:", error.message),
         setLoading(false);
-      //  console.log(response.message)
     }
   }
 
