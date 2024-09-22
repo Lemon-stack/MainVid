@@ -1,67 +1,51 @@
 /* eslint-disable react/prop-types */
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { auth, provider } from "../client/client";
 import {
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
   onAuthStateChanged,
   sendPasswordResetEmail,
   signInWithPopup,
 } from "firebase/auth";
+import Loading from "@/main/spinner";
 
-// I added the auth functions as a context for easy import anywhere you like
 export const AuthContext = React.createContext();
 
 export default function AuthProvider({ children }) {
-  const [currentUser, setCurrentUser] = useState(null);
+  const [currentUser, setCurrentUser] = useState("lemon");
   const [loading, setLoading] = useState(true);
 
-  function signup(email, password) {
-    return createUserWithEmailAndPassword(auth, email, password);
-  }
-
-  function login(email, password) {
-    return signInWithEmailAndPassword(auth, email, password);
-  }
-
-  function logout() {
-    return signOut(auth);
-  }
-  function googleSignin() {
+  const googleSignin = useCallback(() => {
     return signInWithPopup(auth, provider);
-  }
-  const sendPasswordReset = async (email) => {
-    return sendPasswordResetEmail(auth, email);
-  };
+  }, []);
 
+  const sendPasswordReset = useCallback(async (email) => {
+    return sendPasswordResetEmail(auth, email);
+  }, []);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+    setLoading(true); // Set loading to true immediately
+    onAuthStateChanged(auth, (user) => {
       if (!user) {
         setCurrentUser(null);
-        setLoading(false);
+      } else {
+        setCurrentUser(user);
+  
       }
-      setCurrentUser(user);
-      setLoading(false);
+      setLoading(false); // Set loading to false after determining the user state
     });
 
-    return () => unsubscribe();
-  }, [currentUser]);
+    // Cleanup the subscription
+  }, []);
 
-
+  if (loading) {
+    return <Loading />;
+  }
   const value = {
     currentUser,
-    signup,
-    login,
-    logout,
+    loading,
     googleSignin,
     sendPasswordReset,
   };
-
-  if (loading) {
-    return <div>Loading......</div>;
-  }
 
   return (
     <AuthContext.Provider value={value}>
