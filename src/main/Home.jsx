@@ -20,7 +20,7 @@ export default function Home() {
     setLoading(true);
     try {
       const response = await axios.post(
-        "https://lserve.vercel.app/fetch-video",
+        "https://lserve.vercel.app/api/fetch-video",
 
         { query },
         {
